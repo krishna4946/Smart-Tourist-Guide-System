@@ -2,248 +2,34 @@
 <html>
 <head>
     <title>Smart Tourist Guide</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #6d28d9; }
-       .card { background: white; border-radius: 10px; padding: 40px; margin: 50px auto; max-width: 500px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-       .card-large { max-width: 1200px; margin: 20px auto; }
-        h1 { color: #1f2937; margin-bottom: 20px; }
-        h2 { color: #374151; margin: 15px 0; }
-        h3 { color: #4b5563; margin: 10px 0; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
-        label { color: #374151; font-size: 14px; font-weight: 600; display: block; margin-top: 10px; }
-        button,.btn { background: #6d28d9; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; font-size: 14px; font-weight: bold; }
-        button:hover,.btn:hover { background: #5b21b6; }
-       .btn-green { background: #10b981; }
-       .btn-green:hover { background: #059669; }
-       .btn-red { background: #ef4444; }
-       .btn-red:hover { background: #dc2626; }
-       .btn-blue { background: #3b82f6; }
-       .btn-blue:hover { background: #2563eb; }
-       .btn-orange { background: #f59e0b; }
-       .btn-orange:hover { background: #d97706; }
-       .alert { padding: 15px; margin: 10px auto; border-radius: 5px; max-width: 500px; }
-       .alert-success { background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
-       .alert-error { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
-       .alert-info { background: #dbeafe; color: #1e40af; border: 1px solid #3b82f6; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background: #f3f4f6; font-weight: bold; }
-       .header { background: #1f2937; color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
-       .flex { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; }
-       .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-       .contact-bar { background: #f3f4f6; padding: 15px; border-radius: 5px; margin: 10px 0; }
-        hr { margin: 30px 0; border: none; border-top: 1px solid #ddd; }
-        @media (max-width: 768px) {
-           .card { margin: 20px; padding: 20px; }
-            table { font-size: 12px; }
-            th, td { padding: 8px 4px; }
-        }
+        body { font-family: Arial; padding: 20px; background: white; }
+        input, button { padding: 10px; font-size: 16px; }
+        img { margin-top: 20px; border-radius: 8px; }
     </style>
 </head>
 <body>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+    <h1>Smart Tourist Guide - Bhubaneswar</h1>
+    
+    <form method="POST">
+        <input type="text" name="place_name" placeholder="Enter place name" required>
+        <button type="submit">Search</button>
+    </form>
 
-    <!-- WELCOME PAGE -->
-    {% if page == 'welcome' %}
-    <div class="card">
-        <h1>Smart Tourist Guide System</h1>
-        <h3>Contact Us</h3>
-        <p style="color:#10b981;font-weight:bold;">Email: momsprince898@gmail.com</p>
-        <p style="color:#10b981;font-weight:bold;">WhatsApp: 8984166820</p>
-        <div style="margin:20px 0;">
-            <a href="mailto:momsprince898@gmail.com" class="btn" style="background:#DB4437;">Email</a>
-            <a href="https://wa.me/918984166820" target="_blank" class="btn" style="background:#25D366;">WhatsApp</a>
-            <a href="https://google.com" target="_blank" class="btn" style="background:#4285F4;">Google</a>
-        </div>
-        <a href="{{ url_for('login') }}" class="btn" style="width:100%;text-align:center;margin:10px 0;">Login</a>
-        <a href="{{ url_for('signup') }}" class="btn btn-green" style="width:100%;text-align:center;">Sign Up</a>
-    </div>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
     {% endif %}
 
-    <!-- LOGIN PAGE -->
-    {% if page == 'login' %}
-    <div class="card">
-        <a href="{{ url_for('welcome') }}" class="btn" style="background:#5b21b6;margin-bottom:20px;">← Back</a>
-        <h1>Login</h1>
-        <form method="POST">
-            <label>Email Address</label>
-            <input type="email" name="email" required>
-            <label>Password</label>
-            <input type="password" name="password" required>
-            <button type="submit" style="width:100%;margin-top:15px;">Log in</button>
-        </form>
-        <div style="margin-top:20px;text-align:center;">
-            <a href="mailto:momsprince898@gmail.com" class="btn" style="background:#DB4437;">Email Us</a>
-            <a href="https://wa.me/918984166820" target="_blank" class="btn" style="background:#25D366;">WhatsApp</a>
-        </div>
-    </div>
+    {% if place %}
+        <h2>{{ place.name }}</h2>
+        <p>{{ place.desc }}</p>
     {% endif %}
 
-    <!-- SIGNUP PAGE -->
-    {% if page == 'signup' %}
-    <div class="card">
-        <a href="{{ url_for('welcome') }}" class="btn" style="background:#5b21b6;margin-bottom:20px;">← Back</a>
-        <h1>Sign up</h1>
-        <form method="POST">
-            <label>Full Name</label>
-            <input type="text" name="name" required>
-            <label>Email Address</label>
-            <input type="email" name="email" required>
-            <label>Contact Number</label>
-            <input type="text" name="phone" pattern="[0-9]{10}" maxlength="10" required>
-            <label>Password</label>
-            <input type="password" name="password" minlength="6" required>
-            <button type="submit" style="width:100%;margin-top:15px;">Create an account</button>
-        </form>
-    </div>
+    {% if image %}
+        <img src="{{ image }}" alt="{{ place.name }}" style="width:100%; max-width:600px;">
+    {% elif place %}
+        <p>No image found</p>
     {% endif %}
 
-    <!-- USER DASHBOARD -->
-    {% if page == 'user_dashboard' %}
-    <div class="header">
-        <h2>Welcome, {{ user_name }}!</h2>
-        <a href="{{ url_for('logout') }}" class="btn btn-red">Logout</a>
-    </div>
-    <div class="card card-large">
-        <h1>Tourist Places - Approved Only</h1>
-        <form method="GET">
-            <div class="flex">
-                <div>
-                    <label>Place Name</label>
-                    <input type="text" name="query" placeholder="Search..." value="{{ request.args.get('query','') }}">
-                </div>
-                <div>
-                    <label>Location</label>
-                    <input type="text" name="location" placeholder="Location..." value="{{ request.args.get('location','') }}">
-                </div>
-                <div>
-                    <label>Category</label>
-                    <select name="category">
-                        <option value="All">All</option>
-                        <option value="Temple" {% if request.args.get('category')=='Temple' %}selected{% endif %}>Temple</option>
-                        <option value="Monument" {% if request.args.get('category')=='Monument' %}selected{% endif %}>Monument</option>
-                        <option value="Nature" {% if request.args.get('category')=='Nature' %}selected{% endif %}>Nature</option>
-                        <option value="Zoo" {% if request.args.get('category')=='Zoo' %}selected{% endif %}>Zoo</option>
-                        <option value="Museum" {% if request.args.get('category')=='Museum' %}selected{% endif %}>Museum</option>
-                        <option value="Beach" {% if request.args.get('category')=='Beach' %}selected{% endif %}>Beach</option>
-                    </select>
-                </div>
-                <button type="submit">Search</button>
-            </div>
-        </form>
-
-        <div style="overflow-x:auto;">
-            <table>
-                <thead>
-                    <tr><th>ID</th><th>Place</th><th>Location</th><th>Category</th><th>Contact</th><th>Date</th><th>Start</th><th>End</th><th>Features</th><th>Action</th></tr>
-                </thead>
-                <tbody>
-                    {% for p in places %}
-                    <tr>
-                        <td>{{ p[0] }}</td><td>{{ p[1] }}</td><td>{{ p[2] }}</td><td>{{ p[3] }}</td>
-                        <td>{{ p[4] }}</td><td>{{ p[5] }}</td><td>{{ p[6] }}</td><td>{{ p[7] }}</td><td>{{ p[8] }}</td>
-                        <td>
-                            <a href="{{ url_for('select_place', place_id=p[0]) }}" class="btn btn-blue" style="padding:5px 10px;font-size:12px;">Select</a>
-                            <a href="https://www.google.com/maps/search/{{ p[1] }}, {{ p[2] }}" target="_blank" class="btn btn-orange" style="padding:5px 10px;font-size:12px;">Map</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <hr>
-        <h2>Add New Tourist Place</h2>
-        <form method="POST" action="{{ url_for('add_place') }}">
-            <div class="grid">
-                <div><label>Place Name*</label><input type="text" name="place_name" required></div>
-                <div><label>Location*</label><input type="text" name="location" required></div>
-                <div><label>Category*</label>
-                    <select name="category" required>
-                        <option value="">Select</option><option>Temple</option><option>Monument</option>
-                        <option>Nature</option><option>Zoo</option><option>Museum</option><option>Beach</option>
-                    </select>
-                </div>
-                <div><label>Contact*</label><input type="text" name="contact" required></div>
-                <div><label>Visit Date*</label><input type="date" name="visit_date" required></div>
-                <div><label>Start Time*</label><input type="text" name="start_time" placeholder="09:00 AM" required></div>
-                <div><label>End Time*</label><input type="text" name="end_time" placeholder="05:00 PM" required></div>
-            </div>
-            <label>Features*</label>
-            <textarea name="features" rows="3" required></textarea>
-            <button type="submit" class="btn-orange" style="width:100%;margin-top:15px;">Submit for Approval</button>
-        </form>
-    </div>
-    {% endif %}
-
-    <!-- ADMIN DASHBOARD -->
-    {% if page == 'admin_dashboard' %}
-    <div class="header">
-        <h2>Admin: {{ admin_name }} | momsprince898@gmail.com | 8984166820</h2>
-        <a href="{{ url_for('logout') }}" class="btn btn-red">Logout</a>
-    </div>
-    <div class="card card-large">
-        <h1>Manage Places - Approve Here</h1>
-        <div class="contact-bar">
-            <b>Contact Us:</b>
-            <a href="mailto:momsprince898@gmail.com" class="btn" style="background:#DB4437;padding:5px 10px;">Email</a>
-            <a href="https://wa.me/918984166820" target="_blank" class="btn" style="background:#25D366;padding:5px 10px;">WhatsApp</a>
-            <a href="https://google.com" target="_blank" class="btn" style="background:#4285F4;padding:5px 10px;">Google</a>
-        </div>
-
-        <form method="GET" style="margin:15px 0;">
-            <label><b>Filter by Status:</b></label>
-            <select name="status" onchange="this.form.submit()">
-                <option value="All" {% if request.args.get('status')=='All' %}selected{% endif %}>All</option>
-                <option value="Pending" {% if request.args.get('status')=='Pending' %}selected{% endif %}>Pending</option>
-                <option value="Approved" {% if request.args.get('status')=='Approved' %}selected{% endif %}>Approved</option>
-            </select>
-        </form>
-
-        <div style="overflow-x:auto;">
-            <table>
-                <thead>
-                    <tr><th>ID</th><th>Place</th><th>Location</th><th>Category</th><th>Contact</th><th>Date</th><th>Start</th><th>End</th><th>Features</th><th>Status</th><th>Action</th></tr>
-                </thead>
-                <tbody>
-                    {% for p in places %}
-                    <tr>
-                        <td>{{ p[0] }}</td><td>{{ p[1] }}</td><td>{{ p[2] }}</td><td>{{ p[3] }}</td>
-                        <td>{{ p[4] }}</td><td>{{ p[5] }}</td><td>{{ p[6] }}</td><td>{{ p[7] }}</td><td>{{ p[8] }}</td>
-                        <td><b style="color:{% if p[9]=='Approved' %}green{% else %}orange{% endif %};">{{ p[9] }}</b></td>
-                        <td>
-                            {% if p[9]!='Approved' %}
-                            <a href="{{ url_for('approve_place', place_id=p[0]) }}" class="btn btn-green" style="padding:5px 10px;font-size:12px;">Approve</a>
-                            {% endif %}
-                            <a href="{{ url_for('delete_place', place_id=p[0]) }}" class="btn btn-red" style="padding:5px 10px;font-size:12px;" onclick="return confirm('Delete this place?')">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <hr>
-        <h1>All Users</h1>
-        <div style="overflow-x:auto;">
-            <table>
-                <thead><tr><th>ID</th><th>Full Name</th><th>Email</th><th>Phone</th><th>Role</th></tr></thead>
-                <tbody>
-                    {% for u in users %}
-                    <tr><td>{{ u[0] }}</td><td>{{ u[1] }}</td><td>{{ u[2] }}</td><td>{{ u[3] }}</td><td>{{ u[4] }}</td></tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    {% endif %}
 </body>
 </html>
