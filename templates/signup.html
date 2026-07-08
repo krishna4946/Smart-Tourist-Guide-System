@@ -1,47 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Smart Tourist Guide - Bhubaneswar</title>
-    <style>
-        body { font-family: Arial; padding: 20px; background: #f5f5f5; text-align: center; }
-       .nav { margin-bottom: 20px; }
-       .nav a { padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 5px; }
-       .nav a:hover { background: #0056b3; }
-        input { padding: 12px; font-size: 16px; width: 300px; border-radius: 5px; border: 1px solid #ccc; }
-        button { padding: 12px 25px; font-size: 16px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background: #218838; }
-        img { margin-top: 20px; border-radius: 10px; max-width: 700px; width: 100%; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-        h1 { color: #333; }
-    </style>
-</head>
-<body>
-    <h1>Smart Tourist Guide - Bhubaneswar</h1>
-
-    <div class="nav">
-        <a href="/signup">Signup</a>
-        <a href="/book">Book Slot</a>
-    </div>
-
-    <form method="POST">
-        <input type="text" name="place_name" placeholder="Search any place - Taj Mahal, Goa, etc" required>
-        <button type="submit">Search</button>
-    </form>
-
-    {% if place_name %}
-        <h2>{{ place_name }}</h2>
-    {% endif %}
-
-    {% if image %}
-        <img src="{{ image }}" alt="{{ place_name }}">
-        <br><br>
-        <a href="/book" style="padding:10px 20px; background:orange; color:white; text-decoration:none; border-radius:5px;">Book Slot for {{ place_name }}</a>
-    {% endif %}
-
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <p style="color:green;">{{ messages[0] }}</p>
-      {% endif %}
-    {% endwith %}
-
-</body>
-</html>
+<h2>Signup</h2>
+<form method="POST">
+<input name="name" placeholder="Name" required><br>
+<input name="email" placeholder="Email" required><br>
+<input name="password" type="password" placeholder="Password" required><br>
+<button>Signup</button>
+</form>
