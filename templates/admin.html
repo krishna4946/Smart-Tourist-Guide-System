@@ -1,17 +1,63 @@
-<h2>Admin Dashboard</h2>
-<a href="/">Back to Home</a>
-<h3>All Bookings</h3>
-<table border="1" style="width:100%; margin-top:10px">
-<tr><th>ID</th><th>User Name</th><th>Email</th><th>Place</th><th>Date</th><th>People</th></tr>
-{% for b in bookings %}
-<tr><td>{{ b.id }}</td><td>{{ b.user_name }}</td><td>{{ b.user_email }}</td><td>{{ b.place_name }}</td><td>{{ b.date }}</td><td>{{ b.people }}</td></tr>
-{% endfor %}
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart City Bhubaneswar - Tourist Guide</title>
+<style>
+body{font-family:Arial; background:#f0f4f8; text-align:center; padding:20px; margin:0}
+.nav {background:white; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:20px}
+.nav a{padding:10px 18px; background:#007bff; color:white; text-decoration:none; border-radius:5px; margin:5px; font-weight:bold}
+input{padding:12px; width:350px; border:2px solid #ccc; border-radius:5px; font-size:16px}
+button{padding:12px 25px; background:#28a745; color:white; border:none; border-radius:5px; font-size:16px; cursor:pointer}
+img{margin-top:20px; max-width:750px; width:90%; border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+.card {background:white; padding:30px; border-radius:10px; max-width:800px; margin:20px auto}
+.btn-map {padding:12px 20px; background:#dc3545; color:white; text-decoration:none; border-radius:5px; font-weight:bold}
+.btn-book {padding:12px 20px; background:#fd7e14; color:white; text-decoration:none; border-radius:5px; font-weight:bold}
+.flash {color:green; font-weight:bold; background:#d4edda; padding:10px; border-radius:5px}
+</style>
+</head>
+<body>
 
-<h3>All Users</h3>
-<table border="1" style="width:100%; margin-top:10px">
-<tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th></tr>
-{% for u in users %}
-<tr><td>{{ u.id }}</td><td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td></tr>
-{% endfor %}
-</table>
+<h1>Smart City Bhubaneswar - Tourist Guide</h1>
+
+<div class="nav">
+    {% if 'user_id' in session %}
+        Welcome, <b>{{ session.name }}</b>!
+        <a href="/book">Book Slot</a>
+        {% if session.role == 'Admin' %}<a href="/admin">Admin Panel</a>{% endif %}
+        <a href="/logout" style="background:#dc3545">Logout</a>
+    {% else %}
+        <a href="/signup">Signup</a>
+        <a href="/login">Login</a>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h2>Search Any Place</h2>
+    <form method="POST" style="margin-top:20px">
+        <input type="text" name="place_name" placeholder="Enter place name and search" required> <!-- HATA DIYA TAJ MAHAL GOA -->
+        <button>Search</button>
+    </form>
+
+    {% if place_name %}
+        <h2 style="margin-top:30px">{{ place_name }}</h2>
+        <img src="{{ image }}" alt="{{ place_name }}">
+        <br><br>
+        <a href="{{ map_link }}" target="_blank" class="btn-map">View on Google Map</a>
+        {% if 'user_id' in session %}
+            <a href="/book?place={{ place_name }}" class="btn-book">Book Slot</a>
+        {% else %}
+            <p style="color:red">Login to Book Slot</p>
+        {% endif %}
+    {% else %}
+        <h2 style="margin-top:30px">Welcome to Smart City Bhubaneswar</h2>
+        <img src="{{ image }}" alt="Bhubaneswar Smart City"> <!-- DEFAULT BUILDING IMAGE -->
+        <p>Explore the capital of Odisha</p>
+    {% endif %}
+</div>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}<p class="flash">{{ messages[0] }}</p>{% endif %}
+{% endwith %}
+
+</body>
+</html>
