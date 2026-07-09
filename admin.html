@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Smart Tourist Guide - Bhubaneswar</title>
+<title>Smart City Bhubaneswar - Tourist Guide</title>
 <style>
 body{font-family:Arial; background:#f0f4f8; text-align:center; padding:20px; margin:0}
 .nav {background:white; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:20px}
 .nav a{padding:10px 18px; background:#007bff; color:white; text-decoration:none; border-radius:5px; margin:5px; font-weight:bold}
-.nav a:hover{background:#0056b3}
 input{padding:12px; width:350px; border:2px solid #ccc; border-radius:5px; font-size:16px}
 button{padding:12px 25px; background:#28a745; color:white; border:none; border-radius:5px; font-size:16px; cursor:pointer}
-button:hover{background:#218838}
 img{margin-top:20px; max-width:750px; width:90%; border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,0.2)}
 .card {background:white; padding:30px; border-radius:10px; max-width:800px; margin:20px auto}
 .btn-map {padding:12px 20px; background:#dc3545; color:white; text-decoration:none; border-radius:5px; font-weight:bold}
@@ -19,7 +17,7 @@ img{margin-top:20px; max-width:750px; width:90%; border-radius:15px; box-shadow:
 </head>
 <body>
 
-<h1>Smart Tourist Guide System</h1>
+<h1>Smart City Bhubaneswar - Tourist Guide</h1>
 
 <div class="nav">
     {% if 'user_id' in session %}
@@ -34,22 +32,26 @@ img{margin-top:20px; max-width:750px; width:90%; border-radius:15px; box-shadow:
 </div>
 
 <div class="card">
-    <h2>Search Any Tourist Place</h2>
+    <h2>Search Any Place</h2>
     <form method="POST" style="margin-top:20px">
-        <input type="text" name="place_name" placeholder="Search - Taj Mahal, Goa Beach, Udayagiri Caves" required>
+        <input type="text" name="place_name" placeholder="Enter place name and search" required> <!-- HATA DIYA TAJ MAHAL GOA -->
         <button>Search</button>
     </form>
 
     {% if place_name %}
         <h2 style="margin-top:30px">{{ place_name }}</h2>
-        {% if image %}<img src="{{ image }}" alt="{{ place_name }}">{% endif %}
+        <img src="{{ image }}" alt="{{ place_name }}">
         <br><br>
         <a href="{{ map_link }}" target="_blank" class="btn-map">View on Google Map</a>
         {% if 'user_id' in session %}
-            <a href="/book?place={{ place_name }}" class="btn-book">Book Slot for {{ place_name }}</a>
+            <a href="/book?place={{ place_name }}" class="btn-book">Book Slot</a>
         {% else %}
             <p style="color:red">Login to Book Slot</p>
         {% endif %}
+    {% else %}
+        <h2 style="margin-top:30px">Welcome to Smart City Bhubaneswar</h2>
+        <img src="{{ image }}" alt="Bhubaneswar Smart City"> <!-- DEFAULT BUILDING IMAGE -->
+        <p>Explore the capital of Odisha</p>
     {% endif %}
 </div>
 

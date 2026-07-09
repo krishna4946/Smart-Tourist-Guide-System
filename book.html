@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Book Slot</title>
+<style>body{font-family:Arial; text-align:center; padding:50px; background:#f0f4f8}
+.card{background:white; padding:30px; border-radius:10px; width:400px; margin:auto}
+input{padding:10px; width:90%; margin:10px 0} button{padding:12px; background:green; color:white; border:none; width:95%}</style>
+</head>
+<body>
+<div class="card">
+<h2>Book Your Slot</h2>
+<form method="POST">
+<input name="place" value="{{ place }}" placeholder="Place Name" readonly required><br>
+<input name="date" type="date" required><br>
+<input name="people" type="number" placeholder="No of People" min="1" required><br>
+<button>Book Now</button>
+</form>
+<br><a href="/">Back to Home</a>
+</div>
+</body>
+</html>

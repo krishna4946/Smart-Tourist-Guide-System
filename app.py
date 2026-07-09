@@ -6,16 +6,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'tourist_secret_key_123'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///krishna.db' # YAHI CHANGE KIYA
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///krishna.db'
 db = SQLAlchemy(app)
 
-# DB Models
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(200))
-    role = db.Column(db.String(20), default='User') # Admin or User
+    role = db.Column(db.String(20), default='User')
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -27,26 +26,24 @@ class Booking(db.Model):
 
 with app.app_context():
     db.create_all()
-    # Default Admin bana do - TERA EMAIL + PASSWORD
     if not User.query.filter_by(email="momsprince898@gmail.com").first():
         admin = User(name="Admin", email="momsprince898@gmail.com", password=generate_password_hash("devil777"), role="Admin")
         db.session.add(admin)
         db.session.commit()
-        print("Default Admin: momsprince898@gmail.com / devil777")
+        print("Default Admin Created: momsprince898@gmail.com / devil777")
 
 def get_unsplash_image(place_name):
     access_key = os.environ.get('UNSPLASH_KEY')
     if not access_key:
-        return "https://via.placeholder.com/700x400.png?text=Add+UNSPLASH_KEY+in+Render"
+        return "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?q=80&w=1200" # Default Smart City Bhubaneswar
     try:
         url = "https://api.unsplash.com/search/photos"
-        params = {"query": f"{place_name} tourism travel India", "client_id": access_key, "per_page": 1, "orientation": "landscape"}
+        params = {"query": f"{place_name} building smart city", "client_id": access_key, "per_page": 1, "orientation": "landscape"}
         res = requests.get(url, params=params, timeout=5)
         if res.status_code == 200 and res.json()['results']:
             return res.json()['results'][0]['urls']['regular']
-    except Exception as e:
-        print("Unsplash Error:", e)
-    return f"https://via.placeholder.com/700x400.png?text={place_name}"
+    except: pass
+    return "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?q=80&w=1200" # Fallback Smart City
 
 def get_google_map(place_name):
     query = place_name.replace(" ", "+")
@@ -57,10 +54,15 @@ def home():
     image = None
     place_name = None
     map_link = None
+    default_image = "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?q=80&w=1200" # Bhubaneswar Smart City Building
+
     if request.method == 'POST':
         place_name = request.form.get('place_name')
         image = get_unsplash_image(place_name)
         map_link = get_google_map(place_name)
+    else:
+        image = default_image # Home pe direct Smart City image
+
     return render_template('index.html', image=image, place_name=place_name, map_link=map_link)
 
 @app.route('/signup', methods=['GET', 'POST'])
