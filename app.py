@@ -44,8 +44,8 @@ def get_place_image(place_name):
             return res.json()['thumbnail']['source']
     except: pass
 
-    # 2. UNSPLASH FALLBACK - YE LINE FIX KI HAI
-    clean_name = place_name.replace(" ",")  # <-- YAHAN COMMA THA
+    # 2. UNSPLASH FALLBACK - AB SAHI HAI
+    clean_name = place_name.replace(" ", ",")  # <-- YE LINE SAHI KAR DI
     return f"https://source.unsplash.com/800x400/?{clean_name},tourism,landmark"
 
 def get_google_map(place_name):
