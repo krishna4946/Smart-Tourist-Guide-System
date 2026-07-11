@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signup - Travelista Tours</title>
+<title>Login - Travelista Tours</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -40,9 +40,9 @@
     .social-icons a:hover { transform: scale(1.1); }
     .fa-google { background: #db4437; }
     .fa-whatsapp { background: #25D366; }
-    .login-link { text-align: center; font-size: 14px; color: #555; }
-    .login-link a { color: #0077b6; text-decoration: none; font-weight: 600; }
-    .login-link a:hover { text-decoration: underline; }
+    .signup-link { text-align: center; font-size: 14px; color: #555; }
+    .signup-link a { color: #0077b6; text-decoration: none; font-weight: 600; }
+    .signup-link a:hover { text-decoration: underline; }
     @media(max-width: 900px){ .left-section { display: none; } .right-section { width: 100%; max-width: 400px; margin: auto; } body { justify-content: center; align-items: center; background: #f0f8ff; } }
 </style>
 </head>
@@ -52,16 +52,9 @@
         <p>Explore the World with Us</p>
     </div>
     <div class="right-section">
-        <h2>Create Account</h2>
-        <p>Register with Email</p>
-        <form method="POST" action="/signup">
-            <div class="input-group">
-                <label>Full Name</label>
-                <div class="input-box">
-                    <i class="fa fa-user"></i>
-                    <input type="text" name="name" required>
-                </div>
-            </div>
+        <h2>Welcome Back</h2>
+        <p>Login to your Account</p>
+        <form method="POST" action="/login">
             <div class="input-group">
                 <label>Email Id</label>
                 <div class="input-box">
@@ -76,14 +69,14 @@
                     <input type="password" name="password" required>
                 </div>
             </div>
-            <button type="submit" class="btn">REGISTER</button>
+            <button type="submit" class="btn">LOGIN</button>
         </form>
         <div class="or">OR</div>
         <div class="social-icons">
             <a href="mailto:momsprince898@gmail.com" target="_blank" title="Mail me"><i class="fa fa-google"></i></a>
             <a href="https://wa.me/918984166820" target="_blank" title="WhatsApp me"><i class="fa fa-whatsapp"></i></a>
         </div>
-        <div class="login-link">Already have account? <a href="/login">Login Now</a></div>
+        <div class="signup-link">Don't have account? <a href="/signup">Signup Now</a></div>
     </div>
 </body>
 </html>
