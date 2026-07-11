@@ -4,8 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = 'tourist_secret_key_123_final'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///krishna.db'
+app.secret_key = 'travelista_secret_key_2026'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///travelista.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -35,25 +35,23 @@ with app.app_context():
     except: db.session.rollback()
 
 def get_place_image(place_name):
-    # 1. WIKIPEDIA EXACT
     try:
         wiki_name = place_name.replace(" ", "_")
         url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{wiki_name}"
         res = requests.get(url, timeout=5)
-        if res.status_code == 200 and 'thumbnail' in res.json():
-            return res.json()['thumbnail']['source']
+        if res.status_code == 200:
+            data = res.json()
+            if 'thumbnail' in data: return data['thumbnail']['source']
+            elif 'originalimage' in data: return data['originalimage']['source']
     except: pass
-
-    # 2. UNSPLASH FALLBACK - AB SAHI HAI
-    clean_name = place_name.replace(" ", ",")  # <-- YE LINE SAHI KAR DI
-    return f"https://source.unsplash.com/800x400/?{clean_name},tourism,landmark"
+    return "https://upload.wikimedia.org/wikipedia/commons/5/5f/Lingaraj_Temple_Bhubaneswar.jpg"
 
 def get_google_map(place_name):
     return f"https://www.google.com/maps/search/?api=1&query={place_name.replace(' ', '+')}"
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    image = "https://source.unsplash.com/800x400/?Bhubaneswar,smart-city,building"
+    image = "https://upload.wikimedia.org/wikipedia/commons/5/5f/Lingaraj_Temple_Bhubaneswar.jpg"
     place_name = None; map_link = None
     if request.method == 'POST':
         place_name = request.form.get('place_name')

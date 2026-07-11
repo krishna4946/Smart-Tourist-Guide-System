@@ -1,7 +1,30 @@
-<h2>Signup</h2>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signup - Travelista Tours</title><link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/e/e9/Emblem_of_Odisha.svg">
+<style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', Arial}
+body{display:flex;height:100vh;overflow:hidden}
+.left{width:50%;background:url("{{ url_for('static', filename='login_bg.jpg') }}") no-repeat center/cover;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;padding:40px}
+.left h1{font-size:50px;font-family:'Brush Script MT', cursive;margin-bottom:15px;text-shadow:2px 2px 8px rgba(0,0,0,0.7)}
+.left p{font-size:16px;max-width:400px;line-height:1.6;text-shadow:1px 1px 5px rgba(0,0,0,0.7)}
+.right{width:50%;background:white;display:flex;justify-content:center;align-items:center}
+.login-box{width:80%;max-width:400px}.login-box h2{font-size:42px;color:#00a8ff;text-align:center;margin-bottom:5px;font-weight:700}
+.login-box p{text-align:center;color:gray;margin-bottom:30px}.input-group{position:relative;margin-bottom:25px}
+.input-group input{width:100%;padding:14px 14px 14px 45px;border:2px solid #00a8ff;border-radius:10px;font-size:15px;outline:none}
+.input-group label{position:absolute;top:-10px;left:15px;background:white;padding:0 8px;font-size:12px;color:#00a8ff;font-weight:bold}
+.icon{position:absolute;left:15px;top:15px;width:18px;opacity:0.6}.btn{width:100%;padding:14px;background:#00a8ff;color:white;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:5px}
+.btn:hover{background:#0088cc}.flash{color:red;background:#ffe6e6;padding:10px;border-radius:5px;text-align:center;margin-bottom:15px}
+.divider{text-align:center;color:gray;margin:20px 0;position:relative}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:#ddd}
+.divider::before{left:0}.divider::after{right:0}
+.social{display:flex;gap:15px;justify-content:center;margin:15px 0}
+.social button{width:45px;height:45px;border:1px solid #ddd;border-radius:50%;background:white;cursor:pointer;font-size:20px;font-weight:bold}
+.bottom-text{text-align:center;margin-top:20px;color:#555}a{color:#00a8ff;text-decoration:none;font-weight:bold}</style></head><body>
+<div class="left"><h1>Travelista Tours</h1><p>Travel is the only purchase that enriches you in ways beyond material wealth</p></div>
+<div class="right"><div class="login-box"><h2>Create Account</h2><p>Register with Email</p>
+{% with messages = get_flashed_messages() %}{% if messages %}<p class="flash">{{ messages[0] }}</p>{% endif %}{% endwith %}
 <form method="POST">
-<input name="name" placeholder="Name" required><br>
-<input name="email" placeholder="Email" required><br>
-<input name="password" type="password" placeholder="Password" required><br>
-<button>Signup</button>
-</form>
+<div class="input-group"><label>Full Name</label><img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" class="icon"><input type="text" name="name" placeholder="John Doe" required></div>
+<div class="input-group"><label>Email Id</label><img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" class="icon"><input type="email" name="email" placeholder="thisuix@mail.com" required></div>
+<div class="input-group"><label>Password</label><img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" class="icon"><input type="password" name="password" placeholder="************" required></div>
+<button class="btn">REGISTER</button></form>
+<div class="divider">OR</div><div class="social"><button>G</button><button>f</button><button></button></div>
+<p class="bottom-text">Already have account? <a href="/login">Login Now</a></p></div></div></body></html>
