@@ -162,18 +162,19 @@
     <p>Travel with the best</p>
   </div>
 
-  <!-- SIRF EK HI LOGIN POPUP -->
+  <!-- EK HI POPUP -->
   <div class="popup" id="loginPopup">
     <button class="close-btn" onclick="document.getElementById('loginPopup').style.display='none'">×</button>
     
     <div class="tabs">
-      <span class="active">Log in</span>
-      <span>Sign up</span>
+      <span class="active" id="loginTab">Log in</span>
+      <span id="signupTab">Sign up</span>
     </div>
 
     <h3>Dream Destination</h3>
 
-    <form action="/login" method="POST">
+    <!-- LOGIN FORM -->
+    <form action="/login" method="POST" id="loginForm">
       <div class="input-box">
         <i class="fa fa-user"></i>
         <input type="email" name="email" placeholder="Enter Email" required>
@@ -184,8 +185,47 @@
       </div>
       <button type="submit" class="login-btn">Log in</button>
     </form>
+
+    <!-- SIGNUP FORM -->
+    <form action="/signup" method="POST" id="signupForm" style="display:none;">
+      <div class="input-box">
+        <i class="fa fa-user"></i>
+        <input type="text" name="name" placeholder="Enter Name" required>
+      </div>
+      <div class="input-box">
+        <i class="fa fa-envelope"></i>
+        <input type="email" name="email" placeholder="Enter Email" required>
+      </div>
+      <div class="input-box">
+        <i class="fa fa-lock"></i>
+        <input type="password" name="password" placeholder="Create password" required>
+      </div>
+      <button type="submit" class="login-btn">Sign up</button>
+    </form>
+
     <a href="/forget_pass" class="forgot">Forgot password?</a>
   </div>
+
+  <script>
+    const loginTab = document.getElementById('loginTab');
+    const signupTab = document.getElementById('signupTab');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+
+    signupTab.onclick = () => {
+      loginForm.style.display = 'none';
+      signupForm.style.display = 'block';
+      loginTab.classList.remove('active');
+      signupTab.classList.add('active');
+    }
+
+    loginTab.onclick = () => {
+      signupForm.style.display = 'none';
+      loginForm.style.display = 'block';
+      signupTab.classList.remove('active');
+      loginTab.classList.add('active');
+    }
+  </script>
 
 </body>
 </html>
