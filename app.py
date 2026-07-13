@@ -10,7 +10,7 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'momsprince898@gmail.com' # Tera gmail
-app.config['MAIL_PASSWORD'] = 'qudq tumi jgmd drf' .
+app.config['MAIL_PASSWORD'] = 'qudq tumi jgmd drf' 
 
 mail = Mail(app)
 
