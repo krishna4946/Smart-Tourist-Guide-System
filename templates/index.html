@@ -1,154 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Travelista Tours</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travelista - Dream Destination</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
     body {
-        height: 100vh;
-        background: url("https://s3-alpha.figma.com/hub/file/5761852895/e67383d8-c504-4fd8-acfe-a24dc17a027e-cover.png") no-repeat center/cover;
-        display: flex; flex-direction: column;
-    }
-   .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; }
-   .nav-left,.nav-right { display: flex; gap: 20px; }
-   .nav-btn {
-        padding: 8px 20px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
-        border-radius: 20px; color: white; text-decoration: none; font-weight: 500;
-        transition: 0.3s; cursor: pointer;
-    }
-   .nav-btn:hover { background: rgba(255,255,255,0.3); }
-   .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; flex-direction: column; }
-
-   .flash-msg {
-        background:#00ff88;color:#000;padding:10px 20px;border-radius:8px;
-        text-align:center;margin-bottom:15px; font-weight:600;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070') no-repeat center center/cover;
+      height: 100vh;
+      overflow: hidden;
     }
 
-   .glass-box {
-        width: 400px; background: rgba(255,255,255,0.15); backdrop-filter: blur(15px);
-        border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); padding: 30px;
-        color: white; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    /* Navbar */
+    .navbar {
+      display: flex;
+      gap: 15px;
+      padding: 25px 50px;
     }
-   .tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.3); }
-   .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; font-weight: 600; opacity: 0.6; }
-   .tab.active { border-bottom: 2px solid white; opacity: 1; }
-   .form { display: none; }
-   .form.active { display: block; }
-   .input-box {
-        display: flex; align-items: center; background: rgba(255,255,255,0.2);
-        border-radius: 10px; padding: 12px; margin-bottom: 15px;
+    .navbar a {
+      text-decoration: none;
+      color: white;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-weight: 500;
     }
-   .input-box i { margin-right: 10px; }
-   .input-box input {
-        border: none; background: transparent; outline: none; color: white; width: 100%;
+
+    /* Main Text */
+    .hero-text {
+      position: absolute;
+      top: 30%;
+      left: 8%;
+      color: white;
     }
-   .input-box input::placeholder { color: rgba(255,255,255,0.7); }
-   .btn {
-        width: 100%; padding: 12px; border: none; border-radius: 25px;
-        background: #00ff88; color: #003322; font-weight: 700; font-size: 16px;
-        cursor: pointer; margin-top: 10px; transition: 0.3s;
+    .hero-text h1 {
+      font-size: 70px;
+      line-height: 1.1;
+      font-weight: 700;
     }
-   .btn:hover { transform: scale(1.02); }
-   .forgot { text-align: center; margin-top: 15px; font-size: 13px; }
-   .forgot a { color: white; text-decoration: underline; cursor: pointer; }
-   .popup {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 999;
+    .hero-text p {
+      font-size: 22px;
+      font-style: italic;
+      margin-top: 10px;
     }
-   .popup-content {
-        background: white; color: #333; padding: 30px; border-radius: 15px; text-align: center;
+
+    /* Popup Login Box */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 380px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 30px 25px;
+      color: white;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+      z-index: 999;
     }
-   .popup-content h3 { margin-bottom: 15px; color: #0077b6; }
-   .close { margin-top: 15px; padding: 8px 20px; background: #00aaff; color: white; border: none; border-radius: 8px; cursor: pointer; }
-</style>
+
+    /* Cross Button */
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 28px;
+      cursor: pointer;
+      color: white;
+      background: none;
+      border: none;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+    .tabs span {
+      cursor: pointer;
+      padding-bottom: 10px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .tabs .active {
+      border-bottom: 3px solid white;
+    }
+
+    .popup h3 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+
+    .input-box {
+      position: relative;
+      margin-bottom: 15px;
+    }
+    .input-box i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ddd;
+    }
+    .input-box input {
+      width: 100%;
+      padding: 14px 14px 14px 45px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+    .input-box input::placeholder { color: #eee; }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(90deg, #00ff88, #00cc66);
+      color: black;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .forgot {
+      color: white;
+      font-size: 13px;
+      text-align: center;
+      display: block;
+      margin-top: 15px;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="nav-left">
-            <a href="#" class="nav-btn">Home</a>
-            <a href="#" class="nav-btn">About</a>
-        </div>
-        <div class="nav-right">
-            <a class="nav-btn" onclick="showTab('login')">Log in</a>
-            <a class="nav-btn" onclick="openContact()">Contact us</a>
-        </div>
+
+  <div class="navbar">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+  </div>
+
+  <div class="hero-text">
+    <h1>Dream<br>Destination</h1>
+    <p>Travel with the best</p>
+  </div>
+
+  <!-- SIRF EK HI LOGIN POPUP -->
+  <div class="popup" id="loginPopup">
+    <button class="close-btn" onclick="document.getElementById('loginPopup').style.display='none'">×</button>
+    
+    <div class="tabs">
+      <span class="active">Log in</span>
+      <span>Sign up</span>
     </div>
 
-    <div class="container">
-        <!-- FLASH MESSAGE -->
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <div class="flash-msg">{{ messages[0] }}</div>
-          {% endif %}
-        {% endwith %}
+    <h3>Dream Destination</h3>
 
-        <div class="glass-box">
-            <div class="tabs">
-                <div class="tab {% if not show_otp %}active{% endif %}" onclick="showTab('login')">Log in</div>
-                <div class="tab" onclick="showTab('signup')">Sign up</div>
-            </div>
+    <form action="/login" method="POST">
+      <div class="input-box">
+        <i class="fa fa-user"></i>
+        <input type="email" name="email" placeholder="Enter Email" required>
+      </div>
+      <div class="input-box">
+        <i class="fa fa-lock"></i>
+        <input type="password" name="password" placeholder="Enter password" required>
+      </div>
+      <button type="submit" class="login-btn">Log in</button>
+    </form>
+    <a href="/forget_pass" class="forgot">Forgot password?</a>
+  </div>
 
-            <!-- LOGIN FORM -->
-            <form class="form {% if not show_otp %}active{% endif %}" id="login" method="POST" action="/login">
-                <h2 style="text-align:center;margin-bottom:20px;">Dream Destination</h2>
-                <div class="input-box"><i class="fa fa-user"></i><input type="text" name="email" placeholder="Enter Email" required></div>
-                <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Enter password" required></div>
-                <button class="btn">Log in</button>
-                <div class="forgot"><a onclick="showTab('forgot')">Forgot password?</a></div>
-            </form>
-
-            <!-- SIGNUP FORM -->
-            <form class="form" id="signup" method="POST" action="/signup">
-                <div class="input-box"><i class="fa fa-user"></i><input type="text" name="name" placeholder="Full Name" required></div>
-                <div class="input-box"><i class="fa fa-envelope"></i><input type="email" name="email" placeholder="Enter Email" required></div>
-                <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Create Password" required></div>
-                <button class="btn">Sign up</button>
-            </form>
-
-            <!-- FORGOT PASSWORD FORM -->
-            <form class="form" id="forgot" method="POST" action="/forgot_password">
-                <h3 style="text-align:center;margin-bottom:15px;">Reset Password</h3>
-                <div class="input-box"><i class="fa fa-envelope"></i><input type="text" name="contact" placeholder="Enter Email or Phone No" required></div>
-                <button class="btn">Send OTP</button>
-                <div class="forgot"><a onclick="showTab('login')">Back to Login</a></div>
-            </form>
-
-            <!-- OTP VERIFY FORM -->
-            {% if show_otp %}
-            <form class="form active" id="otp_form" method="POST" action="/verify_otp">
-                <h3 style="text-align:center;margin-bottom:15px;">Enter OTP</h3>
-                <div class="input-box"><i class="fa fa-key"></i><input type="text" name="otp" placeholder="Enter 6 digit OTP" required></div>
-                <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="new_password" placeholder="Enter New Password" required></div>
-                <button class="btn">Reset Password</button>
-                <div class="forgot"><a onclick="showTab('login')">Back to Login</a></div>
-            </form>
-            {% endif %}
-        </div>
-    </div>
-
-    <!-- CONTACT POPUP -->
-    <div class="popup" id="contactPopup">
-        <div class="popup-content">
-            <h3>Contact Us</h3>
-            <p><i class="fa fa-phone"></i> 8984166820</p>
-            <p><i class="fa fa-envelope"></i> momsprince898@gmail.com</p>
-            <button class="close" onclick="closeContact()">Close</button>
-        </div>
-    </div>
-
-<script>
-    function showTab(tabName) {
-        document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(tabName).classList.add('active');
-        if(event && event.target.classList.contains('tab')) event.target.classList.add('active');
-    }
-    function openContact() { document.getElementById('contactPopup').style.display = 'flex'; }
-    function closeContact() { document.getElementById('contactPopup').style.display = 'none'; }
-</script>
 </body>
 </html>
