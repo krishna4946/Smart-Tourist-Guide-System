@@ -1,108 +1,96 @@
-import requests
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mail import Mail, Message
+import random
+import os
 
 app = Flask(__name__)
-app.secret_key = 'travelista_secret_key_2026'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///travelista.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+app.secret_key = 'travelista_secret_key_123' 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)
-    role = db.Column(db.String(20), default='User')
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'momsprince898@gmail.com' # Tera gmail
+app.config['MAIL_PASSWORD'] = 'qudq tumi jgmd drf' .
 
-class Booking(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String(100), nullable=False)
-    user_email = db.Column(db.String(100), nullable=False)
-    place_name = db.Column(db.String(200), nullable=False)
-    date = db.Column(db.String(20), nullable=False)
-    people = db.Column(db.Integer, nullable=False)
+mail = Mail(app)
 
-with app.app_context():
-    db.create_all()
-    try:
-        admin = User.query.filter_by(email="momsprince898@gmail.com").first()
-        if not admin:
-            admin = User(name="Admin", email="momsprince898@gmail.com", password=generate_password_hash("devil777"), role="Admin")
-            db.session.add(admin)
-            db.session.commit()
-    except: db.session.rollback()
+# Temporary storage for OTP - production me database use karna
+otp_storage = {}
 
-def get_place_image(place_name):
-    try:
-        wiki_name = place_name.replace(" ", "_")
-        url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{wiki_name}"
-        res = requests.get(url, timeout=5)
-        if res.status_code == 200:
-            data = res.json()
-            if 'thumbnail' in data: return data['thumbnail']['source']
-            elif 'originalimage' in data: return data['originalimage']['source']
-    except: pass
-    return "https://upload.wikimedia.org/wikipedia/commons/5/5f/Lingaraj_Temple_Bhubaneswar.jpg"
-
-def get_google_map(place_name):
-    return f"https://www.google.com/maps/search/?api=1&query={place_name.replace(' ', '+')}"
-
-@app.route('/', methods=['GET', 'POST'])
+# ===== HOME ROUTE =====
+@app.route('/')
 def home():
-    image = "https://upload.wikimedia.org/wikipedia/commons/5/5f/Lingaraj_Temple_Bhubaneswar.jpg"
-    place_name = None; map_link = None
-    if request.method == 'POST':
-        place_name = request.form.get('place_name')
-        image = get_place_image(place_name)
-        map_link = get_google_map(place_name)
-    return render_template('index.html', image=image, place_name=place_name, map_link=map_link)
+    return render_template('index.html')
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
+# ===== FORGOT PASSWORD ROUTE =====
+@app.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
     if request.method == 'POST':
+        email = request.form['email']
+
+        # OTP Generate karo 6 digit
+        otp = random.randint(100000, 999999)
+        otp_storage[email] = str(otp)
+
         try:
-            name = request.form['name']; email = request.form['email']
-            password = generate_password_hash(request.form['password'])
-            if User.query.filter_by(email=email).first(): flash("Email already exists!")
-            else: db.session.add(User(name=name, email=email, password=password)); db.session.commit(); flash("Signup successful! Please Login"); return redirect(url_for('login'))
-        except: db.session.rollback(); flash("Signup failed. Try again.")
-    return render_template('signup.html')
+            # Mail bhejo
+            msg = Message('Travelista - Password Reset OTP',
+                          sender='momsprince898@gmail.com',
+                          recipients=[email])
+            msg.body = f"""Hi,
 
-@app.route('/login', methods=['GET', 'POST'])
+Your OTP for password reset is: {otp}
+
+This OTP is valid for 10 minutes.
+Do not share this OTP with anyone.
+
+- Team Travelista"""
+
+            mail.send(msg)
+            flash('OTP sent to your email!', 'success')
+            session['reset_email'] = email
+            return redirect(url_for('verify_otp'))
+
+        except Exception as e:
+            flash(f'Error sending email: {str(e)}', 'danger')
+            print("Mail Error:", e)
+
+    return render_template('forgot_pass.html')
+
+# ===== VERIFY OTP ROUTE =====
+@app.route('/verify-otp', methods=['GET', 'POST'])
+def verify_otp():
+    if 'reset_email' not in session:
+        return redirect(url_for('forgot_password'))
+
+    if request.method == 'POST':
+        user_otp = request.form['otp']
+        email = session['reset_email']
+
+        if email in otp_storage and otp_storage[email] == user_otp:
+            flash('OTP Verified! Now set new password', 'success')
+            del otp_storage[email] # OTP delete kar do
+            session.pop('reset_email', None)
+            return redirect(url_for('reset_password'))
+        else:
+            flash('Invalid OTP. Try again.', 'danger')
+
+    return render_template('verify_otp.html')
+
+# ===== RESET PASSWORD ROUTE =====
+@app.route('/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        new_password = request.form['password']
+        flash('Password reset successful!', 'success')
+        return redirect(url_for('login'))
+
+    return render_template('reset_pass.html')
+
+# ===== LOGIN ROUTE DUMMY =====
+@app.route('/login')
 def login():
-    if request.method == 'POST':
-        try:
-            email = request.form['email']; password = request.form['password']
-            user = User.query.filter_by(email=email).first()
-            if user and check_password_hash(user.password, password):
-                session['user_id'] = user.id; session['role'] = user.role; session['name'] = user.name
-                flash(f"Welcome {user.name}!")
-                return redirect(url_for('admin_dashboard')) if user.role == 'Admin' else redirect(url_for('home'))
-            else: flash("Invalid Email or Password")
-        except: flash("Login error. Try again.")
-    return render_template('login.html')
+    return "Login Page"
 
-@app.route('/book', methods=['GET', 'POST'])
-def book():
-    if 'user_id' not in session: flash("Please login first"); return redirect(url_for('login'))
-    if request.method == 'POST':
-        try:
-            db.session.add(Booking(user_name=session['name'], user_email=User.query.get(session['user_id']).email, place_name=request.form['place'], date=request.form['date'], people=request.form['people']))
-            db.session.commit(); flash(f"Slot booked successfully for {request.form['place']}!"); return redirect(url_for('home'))
-        except: db.session.rollback(); flash("Booking failed.")
-    place = request.args.get('place', '')
-    return render_template('book.html', place=place)
-
-@app.route('/admin')
-def admin_dashboard():
-    if session.get('role')!= 'Admin': flash("Admin access only"); return redirect(url_for('login'))
-    bookings = Booking.query.order_by(Booking.id.desc()).all()
-    users = User.query.all()
-    return render_template('admin.html', bookings=bookings, users=users)
-
-@app.route('/logout')
-def logout(): session.clear(); flash("Logged out successfully"); return redirect(url_for('home'))
-
-if __name__ == '__main__': app.run(debug=False)
+if __name__ == '__main__':
+    app.run(debug=True)
