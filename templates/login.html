@@ -1,82 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - Travelista Tours</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    body { height: 100vh; display: flex; background: #fff; overflow: hidden; }
-    .left-section {
-        flex: 1;
-        background: url("{{ url_for('static', filename='login_bg.jpg') }}") no-repeat center/cover;
-        display: flex; flex-direction: column; justify-content: center; align-items: center;
-        color: white; text-align: center; padding: 20px;
+  <meta charset="UTF-8">
+  <title>Dream Destination</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('your-beach-image.jpg') no-repeat center center/cover;
+      height: 100vh;
+      font-family: Arial, sans-serif;
     }
-    .left-section h1 { font-size: 42px; font-weight: 700; text-shadow: 2px 2px 10px rgba(0,0,0,0.7); }
-    .left-section p { font-size: 16px; margin-top: 10px; text-shadow: 1px 1px 6px rgba(0,0,0,0.7); }
-    .right-section {
-        width: 450px; background: rgba(255, 255, 255, 0.98); padding: 40px 35px;
-        display: flex; flex-direction: column; justify-content: center;
-        box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+
+    /* Top nav */
+    .navbar {
+      padding: 20px;
     }
-    .right-section h2 { text-align: center; color: #0077b6; margin-bottom: 5px; font-size: 28px; font-weight: 700; }
-    .right-section > p { text-align: center; color: #555; font-size: 14px; margin-bottom: 25px; }
-    .input-group { margin-bottom: 20px; }
-    .input-group label { display: block; font-size: 13px; color: #0077b6; margin-bottom: 6px; font-weight: 600; }
-    .input-box { display: flex; align-items: center; border: 1.5px solid #ddd; border-radius: 8px; padding: 12px; background: #fff; transition: 0.3s; }
-    .input-box:focus-within { border-color: #00aaff; }
-    .input-box i { color: #777; margin-right: 10px; font-size: 16px; }
-    .input-box input { border: none; outline: none; width: 100%; font-size: 15px; background: transparent; }
-    .btn { width: 100%; padding: 13px; background: #00aaff; border: none; color: white; font-size: 16px; font-weight: 700; border-radius: 8px; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-    .btn:hover { background: #0088cc; transform: translateY(-1px); }
-    .or { text-align: center; margin: 20px 0; color: #777; font-size: 13px; position: relative; }
-    .or:before, .or:after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: #ddd; }
-    .or:before { left: 0; } .or:after { right: 0; }
-    .social-icons { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
-    .social-icons a { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; text-decoration: none; transition: 0.3s; }
-    .social-icons a:hover { transform: scale(1.1); }
-    .fa-google { background: #db4437; }
-    .fa-whatsapp { background: #25D366; }
-    .signup-link { text-align: center; font-size: 14px; color: #555; }
-    .signup-link a { color: #0077b6; text-decoration: none; font-weight: 600; }
-    .signup-link a:hover { text-decoration: underline; }
-    @media(max-width: 900px){ .left-section { display: none; } .right-section { width: 100%; max-width: 400px; margin: auto; } body { justify-content: center; align-items: center; background: #f0f8ff; } }
-</style>
+    .navbar a {
+      text-decoration: none;
+      color: white;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 20px;
+      border-radius: 20px;
+      margin-right: 10px;
+    }
+
+    /* Main Heading */
+    .main-text {
+      color: white;
+      margin-left: 5%;
+      margin-top: 10%;
+    }
+    .main-text h1 {
+      font-size: 60px;
+      margin: 0;
+    }
+    .main-text p {
+      font-size: 20px;
+      font-style: italic;
+    }
+
+    /* Popup Box */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 350px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 25px;
+      color: white;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+
+    /* Cross Button */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: white;
+      background: none;
+      border: none;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 15px;
+    }
+    .tabs span {
+      cursor: pointer;
+      padding-bottom: 5px;
+    }
+    .tabs .active {
+      border-bottom: 2px solid white;
+    }
+
+    .popup input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      outline: none;
+    }
+    .popup input::placeholder { color: #eee; }
+
+    .popup button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #00ff88, #00cc66);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .popup a {
+      color: white;
+      font-size: 12px;
+      text-align: center;
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="left-section">
-        <h1>Travelista Tours</h1>
-        <p>Explore the World with Us</p>
+
+  <div class="navbar">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+  </div>
+
+  <div class="main-text">
+    <h1>Dream<br>Destination</h1>
+    <p>Travel with the best</p>
+  </div>
+
+  <!-- SIRF EK HI POPUP RAKHA HAI -->
+  <div class="popup" id="loginPopup">
+    <button class="close-btn" onclick="document.getElementById('loginPopup').style.display='none'">×</button>
+    
+    <div class="tabs">
+      <span class="active">Log in</span>
+      <span>Sign up</span>
     </div>
-    <div class="right-section">
-        <h2>Welcome Back</h2>
-        <p>Login to your Account</p>
-        <form method="POST" action="/login">
-            <div class="input-group">
-                <label>Email Id</label>
-                <div class="input-box">
-                    <i class="fa fa-envelope"></i>
-                    <input type="email" name="email" required>
-                </div>
-            </div>
-            <div class="input-group">
-                <label>Password</label>
-                <div class="input-box">
-                    <i class="fa fa-lock"></i>
-                    <input type="password" name="password" required>
-                </div>
-            </div>
-            <button type="submit" class="btn">LOGIN</button>
-        </form>
-        <div class="or">OR</div>
-        <div class="social-icons">
-            <a href="mailto:momsprince898@gmail.com" target="_blank" title="Mail me"><i class="fa fa-google"></i></a>
-            <a href="https://wa.me/918984166820" target="_blank" title="WhatsApp me"><i class="fa fa-whatsapp"></i></a>
-        </div>
-        <div class="signup-link">Don't have account? <a href="/signup">Signup Now</a></div>
-    </div>
+
+    <h3 style="text-align:center;">Dream Destination</h3>
+
+    <form action="/login" method="POST">
+      <input type="email" name="email" placeholder="Enter Email" required>
+      <input type="password" name="password" placeholder="Enter password" required>
+      <button type="submit">Log in</button>
+    </form>
+    <a href="/forget_pass">Forgot password?</a>
+  </div>
+
 </body>
 </html>
