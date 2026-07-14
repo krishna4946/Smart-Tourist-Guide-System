@@ -32,50 +32,56 @@
       transition: 0.3s;
     }
     .navbar a.active {background: white; color: black;}
-    .navbar a:hover {background: rgba(255,255,255,0.3);}
     
-    /* HOME */
-    #homePage {
-      display: block;
-      height: 100vh;
-      padding-top: 120px;
-    }
+    #homePage {display: block; height: 100vh; padding-top: 120px;}
     .hero-text {
       position: absolute;
       top: 30%;
       left: 8%;
-      color: black; /* WHITE SE BLACK KIYA */
+      color: black; /* Dream Destination black */
       z-index: 1;
-      text-shadow: 0 0 15px rgba(255,255,255,0.6); /* bg pe clear dikhe isliye */
+      text-shadow: 0 0 15px rgba(255,255,255,0.6);
     }
     .hero-text h1 {font-size: 70px; line-height: 1.1; font-weight: 700;}
-    .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px; color: black;} /* p bhi black */
+    .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px; color: black;}
 
     .popup { 
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 380px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
-      border-radius: 20px; padding: 30px 25px; color: white; z-index: 999;
+      width: 380px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px);
+      border-radius: 20px; padding: 30px 25px; color: black; z-index: 999; /* popup text bhi black */
     }
-    .close-btn {position: absolute; top: 12px; right: 18px; font-size: 28px; cursor: pointer; color: white; background: none; border: none;}
-    .tabs {display: flex; justify-content: center; gap: 40px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.3);}
-    .tabs span {cursor: pointer; padding-bottom: 10px; font-size: 18px; font-weight: 500;}
-    .tabs .active {border-bottom: 3px solid white;}
+    .close-btn {position: absolute; top: 12px; right: 18px; font-size: 28px; cursor: pointer; color: black; background: none; border: none;}
+    .tabs {display: flex; justify-content: center; gap: 40px; margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.3);}
+    .tabs span {cursor: pointer; padding-bottom: 10px; font-size: 18px; font-weight: 500; color: black;}
+    .tabs .active {border-bottom: 3px solid black;}
+    .popup h3 {color: black; text-align:center; margin-bottom:20px;}
+
+    /* INPUT BOX BLACK KIYA */
     .input-box {position: relative; margin-bottom: 15px;}
-    .input-box i {position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #ddd;}
-    .input-box input {width: 100%; padding: 14px 14px 14px 45px; border: none; border-radius: 12px; background: rgba(255,255,255,0.2); color: white;}
-    .input-box input::placeholder {color: #eee;}
+    .input-box i {position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: black;} /* icon black */
+    .input-box input {
+      width: 100%; 
+      padding: 14px 14px 14px 45px; 
+      border: 1px solid rgba(0,0,0,0.3); 
+      border-radius: 12px; 
+      background: rgba(255,255,255,0.7); /* halka white bg taaki black text dikhe */
+      color: black; /* jo type karega wo black */
+      font-size: 16px;
+    }
+    .input-box input::placeholder {
+      color: black; /* Enter Email / Password black */
+      opacity: 0.7;
+    }
     .login-btn {width: 100%; padding: 14px; border: none; border-radius: 25px; background: linear-gradient(90deg, #00ff88, #00cc66); color: black; font-weight: bold; cursor: pointer;}
 
-    /* ABOUT / CONTACT */
     .page {
-      display: none; /* default band */
+      display: none;
       min-height: 100vh;
       padding: 120px 8%;
       color: white;
       background: rgba(0,0,0,0.85);
     }
     .page h2 {font-size: 45px; margin-bottom: 20px;}
-    .page p {font-size: 18px; line-height: 1.8;}
   </style>
 </head>
 <body>
@@ -86,7 +92,6 @@
     <a id="navContact" onclick="showPage('contact')">Contact</a>
   </div>
 
-  <!-- PAGE 1: HOME -->
   <div id="homePage">
     <div class="hero-text">
       <h1>Dream<br>Destination</h1>
@@ -99,7 +104,7 @@
         <span class="active" id="loginTab">Log in</span>
         <span id="signupTab">Sign up</span>
       </div>
-      <h3 style="text-align:center; margin-bottom:20px;">Dream Destination</h3>
+      <h3>Dream Destination</h3>
       <form action="/login" method="POST" id="loginForm">
         <div class="input-box"><i class="fa fa-user"></i><input type="email" name="email" placeholder="Enter Email" required></div>
         <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Enter password" required></div>
@@ -114,40 +119,27 @@
     </div>
   </div>
 
-  <!-- PAGE 2: ABOUT -->
   <div class="page" id="aboutPage">
     <h2>About Us</h2>
     <p>Welcome to <b>Travelista - Dream Destination</b> ✈️<br><br>
-    We help people reach their dream destinations. 
-    Here you will get the best tour packages, 24/7 customer support, and affordable flights.
-    <br><br>
-    <b>Customer Feedback:</b> ⭐⭐⭐ <br>
-    "Best travel experience ever! The service is amazing."
-    </p>
+    We help people reach their dream destinations.</p>
   </div>
 
-  <!-- PAGE 3: CONTACT -->
   <div class="page" id="contactPage">
     <h2>Contact Us</h2>
-    <p>For any queries, feel free to contact us. We are available 24/7.</p>
-    <br>
     <p><i class="fa fa-phone"></i> +91 89841 66820</p>
     <p><i class="fa fa-envelope"></i> momsprince898@gmail.com</p>
-    <p><i class="fa fa-location-dot"></i> Bhubaneswar, Odisha, India</p>
   </div>
 
   <script>
     function showPage(page) {
-      // sab band
       document.getElementById('homePage').style.display = 'none';
       document.getElementById('aboutPage').style.display = 'none';
       document.getElementById('contactPage').style.display = 'none';
-      
       document.getElementById('navHome').classList.remove('active');
       document.getElementById('navAbout').classList.remove('active');
       document.getElementById('navContact').classList.remove('active');
 
-      // jo chahiye wo on
       if(page === 'home') {
         document.getElementById('homePage').style.display = 'block';
         document.getElementById('navHome').classList.add('active');
