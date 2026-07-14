@@ -6,24 +6,22 @@
   <title>Travelista - Dream Destination</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;}
     body {
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070') no-repeat center center/cover;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070') no-repeat center/cover;
       height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
-
     /* Navbar */
     .navbar {
       display: flex;
       gap: 15px;
       padding: 25px 50px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
     }
     .navbar a {
       text-decoration: none;
@@ -42,119 +40,46 @@
       left: 8%;
       color: white;
     }
-    .hero-text h1 {
-      font-size: 70px;
-      line-height: 1.1;
-      font-weight: 700;
-    }
-    .hero-text p {
-      font-size: 22px;
-      font-style: italic;
-      margin-top: 10px;
-    }
+    .hero-text h1 {font-size: 70px; line-height: 1.1; font-weight: 700;}
+    .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px;}
 
-    /* Popup Login Box */
+    /* Popup */
     .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 380px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 30px 25px;
-      color: white;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.2);
-      z-index: 999;
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 380px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
+      border-radius: 20px; padding: 30px 25px; color: white;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); z-index: 999;
     }
-
-    /* Cross Button */
-    .close-btn {
-      position: absolute;
-      top: 12px;
-      right: 18px;
-      font-size: 28px;
-      cursor: pointer;
-      color: white;
-      background: none;
-      border: none;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.3);
-    }
-    .tabs span {
-      cursor: pointer;
-      padding-bottom: 10px;
-      font-size: 18px;
-      font-weight: 500;
-    }
-    .tabs .active {
-      border-bottom: 3px solid white;
-    }
-
-    .popup h3 {
-      text-align: center;
-      font-size: 22px;
-      margin-bottom: 25px;
-    }
-
-    .input-box {
-      position: relative;
-      margin-bottom: 15px;
-    }
-    .input-box i {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #ddd;
-    }
-    .input-box input {
-      width: 100%;
-      padding: 14px 14px 14px 45px;
-      border: none;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.2);
-      color: white;
-      font-size: 15px;
-      outline: none;
-    }
+    .close-btn {position: absolute; top: 12px; right: 18px; font-size: 28px; cursor: pointer; color: white; background: none; border: none;}
+    .tabs {display: flex; justify-content: center; gap: 40px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.3);}
+    .tabs span {cursor: pointer; padding-bottom: 10px; font-size: 18px; font-weight: 500;}
+    .tabs .active {border-bottom: 3px solid white;}
+    .input-box {position: relative; margin-bottom: 15px;}
+    .input-box i {position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #ddd;}
+    .input-box input {width: 100%; padding: 14px 14px 14px 45px; border: none; border-radius: 12px; background: rgba(255,255,255,0.2); color: white; font-size: 15px; outline: none;}
     .input-box input::placeholder { color: #eee; }
+    .login-btn {width: 100%; padding: 14px; border: none; border-radius: 25px; background: linear-gradient(90deg, #00ff88, #00cc66); color: black; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px;}
+    .forgot {color: white; font-size: 13px; text-align: center; display: block; margin-top: 15px; text-decoration: none;}
 
-    .login-btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 25px;
-      background: linear-gradient(90deg, #00ff88, #00cc66);
-      color: black;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .forgot {
+    /* About + Contact Section */
+    .section {
+      min-height: 100vh;
+      padding: 120px 8%;
       color: white;
-      font-size: 13px;
-      text-align: center;
-      display: block;
-      margin-top: 15px;
-      text-decoration: none;
+      background: rgba(0,0,0,0.5);
     }
+    .section h2 {font-size: 45px; margin-bottom: 20px;}
+    .section p {font-size: 18px; line-height: 1.8; max-width: 700px;}
+    .contact-info {margin-top: 30px; font-size: 18px;}
+    .contact-info i {margin-right: 10px; color: #00ff88;}
   </style>
 </head>
 <body>
 
   <div class="navbar">
     <a href="#">Home</a>
-    <a href="#">About</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
   </div>
 
   <div class="hero-text">
@@ -162,48 +87,53 @@
     <p>Travel with the best</p>
   </div>
 
-  <!-- EK HI POPUP -->
+  <!-- LOGIN SIGNUP POPUP -->
   <div class="popup" id="loginPopup">
     <button class="close-btn" onclick="document.getElementById('loginPopup').style.display='none'">×</button>
-    
     <div class="tabs">
       <span class="active" id="loginTab">Log in</span>
       <span id="signupTab">Sign up</span>
     </div>
+    <h3 style="text-align:center; margin-bottom:20px;">Dream Destination</h3>
 
-    <h3>Dream Destination</h3>
-
-    <!-- LOGIN FORM -->
     <form action="/login" method="POST" id="loginForm">
-      <div class="input-box">
-        <i class="fa fa-user"></i>
-        <input type="email" name="email" placeholder="Enter Email" required>
-      </div>
-      <div class="input-box">
-        <i class="fa fa-lock"></i>
-        <input type="password" name="password" placeholder="Enter password" required>
-      </div>
+      <div class="input-box"><i class="fa fa-user"></i><input type="email" name="email" placeholder="Enter Email" required></div>
+      <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Enter password" required></div>
       <button type="submit" class="login-btn">Log in</button>
     </form>
 
-    <!-- SIGNUP FORM -->
     <form action="/signup" method="POST" id="signupForm" style="display:none;">
-      <div class="input-box">
-        <i class="fa fa-user"></i>
-        <input type="text" name="name" placeholder="Enter Name" required>
-      </div>
-      <div class="input-box">
-        <i class="fa fa-envelope"></i>
-        <input type="email" name="email" placeholder="Enter Email" required>
-      </div>
-      <div class="input-box">
-        <i class="fa fa-lock"></i>
-        <input type="password" name="password" placeholder="Create password" required>
-      </div>
+      <div class="input-box"><i class="fa fa-user"></i><input type="text" name="name" placeholder="Enter Name" required></div>
+      <div class="input-box"><i class="fa fa-envelope"></i><input type="email" name="email" placeholder="Enter Email" required></div>
+      <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Create password" required></div>
       <button type="submit" class="login-btn">Sign up</button>
     </form>
-
     <a href="/forget_pass" class="forgot">Forgot password?</a>
+  </div>
+
+  <!-- ABOUT SECTION -->
+  <div class="section" id="about">
+    <h2>About Us</h2>
+    <p>
+      Welcome to <b>Travelista - Dream Destination</b> ✈️<br><br>
+      Hum logon ko unki dream jagah tak pahunchane me help karte hai. 
+      Yahaan aapko best tour packages, 24/7 support, aur sasti flights milengi.
+      <br><br>
+      <b>Customer Feedback:</b> ⭐⭐⭐⭐⭐ <br>
+      "Best travel experience ever! Service bahut achi hai." <br>
+      "Package sasta aur hotel 5 star jaisa. Highly recommend!"
+    </p>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <div class="section" id="contact">
+    <h2>Contact Us</h2>
+    <p>Koi bhi query ho to seedha humse contact karo. Hum 24/7 available hai.</p>
+    <div class="contact-info">
+      <p><i class="fa fa-phone"></i> +91 98765 43210</p>
+      <p><i class="fa fa-envelope"></i> support@travelista.com</p>
+      <p><i class="fa fa-location-dot"></i> Bhubaneswar, Odisha, India</p>
+    </div>
   </div>
 
   <script>
@@ -211,19 +141,13 @@
     const signupTab = document.getElementById('signupTab');
     const loginForm = document.getElementById('loginForm');
     const signupForm = document.getElementById('signupForm');
-
     signupTab.onclick = () => {
-      loginForm.style.display = 'none';
-      signupForm.style.display = 'block';
-      loginTab.classList.remove('active');
-      signupTab.classList.add('active');
+      loginForm.style.display = 'none'; signupForm.style.display = 'block';
+      loginTab.classList.remove('active'); signupTab.classList.add('active');
     }
-
     loginTab.onclick = () => {
-      signupForm.style.display = 'none';
-      loginForm.style.display = 'block';
-      signupTab.classList.remove('active');
-      loginTab.classList.add('active');
+      signupForm.style.display = 'none'; loginForm.style.display = 'block';
+      signupTab.classList.remove('active'); loginTab.classList.add('active');
     }
   </script>
 
