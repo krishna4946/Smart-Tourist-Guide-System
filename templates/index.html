@@ -29,27 +29,24 @@
       padding: 10px 25px;
       border-radius: 25px;
       font-weight: 500;
-      transition: 0.3s;
     }
-    .navbar a:hover {background: rgba(255,255,255,0.3);}
-
-    /* Hero text - sirf Home pe dikhega */
+    
+    /* Hero text - default me hide rahega */
     .hero-text {
       position: absolute;
       top: 30%;
       left: 8%;
       color: white;
       z-index: 1;
+      display: none; /* Shuru me band */
     }
-    .hero-text.hide {display: none !important;} /* Pura gayab */
+    .hero-text.show {display: block !important;} /* About pe on */
     .hero-text h1 {font-size: 70px; line-height: 1.1; font-weight: 700;}
     .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px;}
 
-    .popup {
-      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
       width: 380px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
-      border-radius: 20px; padding: 30px 25px; color: white;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); z-index: 999;
+      border-radius: 20px; padding: 30px 25px; color: white; z-index: 999;
     }
     .close-btn {position: absolute; top: 12px; right: 18px; font-size: 28px; cursor: pointer; color: white; background: none; border: none;}
     .tabs {display: flex; justify-content: center; gap: 40px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.3);}
@@ -57,21 +54,18 @@
     .tabs .active {border-bottom: 3px solid white;}
     .input-box {position: relative; margin-bottom: 15px;}
     .input-box i {position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #ddd;}
-    .input-box input {width: 100%; padding: 14px 14px 14px 45px; border: none; border-radius: 12px; background: rgba(255,255,255,0.2); color: white; font-size: 15px; outline: none;}
-    .input-box input::placeholder { color: #eee; }
-    .login-btn {width: 100%; padding: 14px; border: none; border-radius: 25px; background: linear-gradient(90deg, #00ff88, #00cc66); color: black; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px;}
-    .forgot {color: white; font-size: 13px; text-align: center; display: block; margin-top: 15px; text-decoration: none;}
+    .input-box input {width: 100%; padding: 14px 14px 14px 45px; border: none; border-radius: 12px; background: rgba(255,255,255,0.2); color: white;}
+    .login-btn {width: 100%; padding: 14px; border: none; border-radius: 25px; background: linear-gradient(90deg, #00ff88, #00cc66); color: black; font-weight: bold;}
 
     .section {
       min-height: 100vh;
       padding: 120px 8%;
       color: white;
-      background: rgba(0,0,0,0.75); /* aur dark kiya */
+      background: rgba(0,0,0,0.8);
       position: relative;
       z-index: 10;
     }
     .section h2 {font-size: 45px; margin-bottom: 20px;}
-    .section p {font-size: 18px; line-height: 1.8; max-width: 700px;}
     .contact-info {margin-top: 30px; font-size: 18px;}
     .contact-info i {margin-right: 10px; color: #00ff88;}
   </style>
@@ -79,17 +73,17 @@
 <body>
 
   <div class="navbar">
-    <a href="#" onclick="showHero()">Home</a>
-    <a href="#about" onclick="hideHero()">About</a>
-    <a href="#contact" onclick="hideHero()">Contact</a>
+    <a href="#" id="homeBtn">Home</a>
+    <a href="#about" id="aboutBtn">About</a>
+    <a href="#contact" id="contactBtn">Contact</a>
   </div>
 
+  <!-- Ye text ab About pe hi dikhega -->
   <div class="hero-text" id="heroText">
     <h1>Dream<br>Destination</h1>
     <p>Travel with the best</p>
   </div>
 
-  <!-- LOGIN SIGNUP POPUP -->
   <div class="popup" id="loginPopup">
     <button class="close-btn" onclick="document.getElementById('loginPopup').style.display='none'">×</button>
     <div class="tabs">
@@ -97,37 +91,26 @@
       <span id="signupTab">Sign up</span>
     </div>
     <h3 style="text-align:center; margin-bottom:20px;">Dream Destination</h3>
-
     <form action="/login" method="POST" id="loginForm">
       <div class="input-box"><i class="fa fa-user"></i><input type="email" name="email" placeholder="Enter Email" required></div>
       <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Enter password" required></div>
       <button type="submit" class="login-btn">Log in</button>
     </form>
-
     <form action="/signup" method="POST" id="signupForm" style="display:none;">
       <div class="input-box"><i class="fa fa-user"></i><input type="text" name="name" placeholder="Enter Name" required></div>
       <div class="input-box"><i class="fa fa-envelope"></i><input type="email" name="email" placeholder="Enter Email" required></div>
       <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Create password" required></div>
       <button type="submit" class="login-btn">Sign up</button>
     </form>
-    <a href="/forget_pass" class="forgot">Forgot password?</a>
   </div>
 
-  <!-- ABOUT SECTION -->
   <div class="section" id="about">
     <h2>About Us</h2>
-    <p>
-      Welcome to <b>Travelista - Dream Destination</b> ✈️<br><br>
-      We help people reach their dream destinations. 
-      Here you will get the best tour packages, 24/7 customer support, and affordable flights.
-      <br><br>
-      <b>Customer Feedback:</b> ⭐⭐⭐ <br>
-      "Best travel experience ever! The service is amazing." <br>
-      "Affordable packages and 5-star hotels. Highly recommended!"
-    </p>
+    <p>Welcome to <b>Travelista - Dream Destination</b> ✈️<br><br>
+    We help people reach their dream destinations. 
+    Here you will get the best tour packages, 24/7 customer support, and affordable flights.</p>
   </div>
 
-  <!-- CONTACT SECTION -->
   <div class="section" id="contact">
     <h2>Contact Us</h2>
     <p>For any queries, feel free to contact us. We are available 24/7.</p>
@@ -139,34 +122,25 @@
   </div>
 
   <script>
-    const heroText = document.getElementById('heroText');
-    const loginTab = document.getElementById('loginTab');
-    const signupTab = document.getElementById('signupTab');
-    const loginForm = document.getElementById('loginForm');
-    const signupForm = document.getElementById('signupForm');
+    const hero = document.getElementById('heroText');
+    
+    document.getElementById('aboutBtn').onclick = () => hero.classList.add('show'); // About pe show
+    document.getElementById('homeBtn').onclick = () => hero.classList.remove('show'); // Home pe hide
+    document.getElementById('contactBtn').onclick = () => hero.classList.remove('show'); // Contact pe hide
 
-    function hideHero() {
-      heroText.classList.add('hide'); // About/Contact pe pura gayab
-    }
-    function showHero() {
-      heroText.classList.remove('hide'); // Home pe wapas
-      window.scrollTo({top: 0, behavior: 'smooth'});
+    // Agar direct #about link se aao to
+    window.onload = () => {
+      if(window.location.hash === '#about') hero.classList.add('show');
     }
 
-    // Agar direct #about ya #contact link se aao to
-    if(window.location.hash === '#about' || window.location.hash === '#contact') {
-      hideHero();
+    document.getElementById('signupTab').onclick = () => {
+      document.getElementById('loginForm').style.display = 'none'; 
+      document.getElementById('signupForm').style.display = 'block';
     }
-
-    signupTab.onclick = () => {
-      loginForm.style.display = 'none'; signupForm.style.display = 'block';
-      loginTab.classList.remove('active'); signupTab.classList.add('active');
-    }
-    loginTab.onclick = () => {
-      signupForm.style.display = 'none'; loginForm.style.display = 'block';
-      signupTab.classList.remove('active'); loginTab.classList.add('active');
+    document.getElementById('loginTab').onclick = () => {
+      document.getElementById('signupForm').style.display = 'none'; 
+      document.getElementById('loginForm').style.display = 'block';
     }
   </script>
-
 </body>
 </html>
