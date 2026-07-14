@@ -29,8 +29,10 @@
       border-radius: 25px;
       font-weight: 500;
       cursor: pointer;
+      transition: 0.3s;
     }
     .navbar a.active {background: white; color: black;}
+    .navbar a:hover {background: rgba(255,255,255,0.3);}
     
     /* HOME */
     #homePage {
@@ -42,10 +44,12 @@
       position: absolute;
       top: 30%;
       left: 8%;
-      color: white;
+      color: black; /* WHITE SE BLACK KIYA */
+      z-index: 1;
+      text-shadow: 0 0 15px rgba(255,255,255,0.6); /* bg pe clear dikhe isliye */
     }
     .hero-text h1 {font-size: 70px; line-height: 1.1; font-weight: 700;}
-    .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px;}
+    .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px; color: black;} /* p bhi black */
 
     .popup { 
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -59,7 +63,8 @@
     .input-box {position: relative; margin-bottom: 15px;}
     .input-box i {position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #ddd;}
     .input-box input {width: 100%; padding: 14px 14px 14px 45px; border: none; border-radius: 12px; background: rgba(255,255,255,0.2); color: white;}
-    .login-btn {width: 100%; padding: 14px; border: none; border-radius: 25px; background: linear-gradient(90deg, #00ff88, #00cc66); color: black; font-weight: bold;}
+    .input-box input::placeholder {color: #eee;}
+    .login-btn {width: 100%; padding: 14px; border: none; border-radius: 25px; background: linear-gradient(90deg, #00ff88, #00cc66); color: black; font-weight: bold; cursor: pointer;}
 
     /* ABOUT / CONTACT */
     .page {
