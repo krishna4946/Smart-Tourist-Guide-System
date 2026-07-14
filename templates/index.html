@@ -8,8 +8,7 @@
   <style>
     * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;}
     body {
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070') no-repeat center/cover;
-      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070') no-repeat center/cover fixed;
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
@@ -31,7 +30,9 @@
       padding: 10px 25px;
       border-radius: 25px;
       font-weight: 500;
+      transition: 0.3s;
     }
+    .navbar a:hover {background: rgba(255,255,255,0.3);}
 
     /* Main Text */
     .hero-text {
@@ -39,6 +40,7 @@
       top: 30%;
       left: 8%;
       color: white;
+      z-index: 1; /* fix overlap */
     }
     .hero-text h1 {font-size: 70px; line-height: 1.1; font-weight: 700;}
     .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px;}
@@ -66,12 +68,20 @@
       min-height: 100vh;
       padding: 120px 8%;
       color: white;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 10; /* section upar aaye */
     }
     .section h2 {font-size: 45px; margin-bottom: 20px;}
     .section p {font-size: 18px; line-height: 1.8; max-width: 700px;}
     .contact-info {margin-top: 30px; font-size: 18px;}
     .contact-info i {margin-right: 10px; color: #00ff88;}
+
+    /* FIX: Hide hero text when on About or Contact */
+    body:has(#about:target) .hero-text,
+    body:has(#contact:target) .hero-text {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -116,22 +126,22 @@
     <h2>About Us</h2>
     <p>
       Welcome to <b>Travelista - Dream Destination</b> ✈️<br><br>
-      Hum logon ko unki dream jagah tak pahunchane me help karte hai. 
-      Yahaan aapko best tour packages, 24/7 support, aur sasti flights milengi.
+      We help people reach their dream destinations. 
+      Here you will get the best tour packages, 24/7 customer support, and affordable flights.
       <br><br>
-      <b>Customer Feedback:</b> ⭐⭐⭐⭐⭐ <br>
-      "Best travel experience ever! Service bahut achi hai." <br>
-      "Package sasta aur hotel 5 star jaisa. Highly recommend!"
+      <b>Customer Feedback:</b> ⭐⭐⭐ <br>
+      "Best travel experience ever! The service is amazing." <br>
+      "Affordable packages and 5-star hotels. Highly recommended!"
     </p>
   </div>
 
   <!-- CONTACT SECTION -->
   <div class="section" id="contact">
     <h2>Contact Us</h2>
-    <p>Koi bhi query ho to seedha humse contact karo. Hum 24/7 available hai.</p>
+    <p>For any queries, feel free to contact us. We are available 24/7.</p>
     <div class="contact-info">
-      <p><i class="fa fa-phone"></i> +91 98765 43210</p>
-      <p><i class="fa fa-envelope"></i> support@travelista.com</p>
+      <p><i class="fa fa-phone"></i> +91 89841 66820</p>
+      <p><i class="fa fa-envelope"></i> momsprince898@gmail.com</p>
       <p><i class="fa fa-location-dot"></i> Bhubaneswar, Odisha, India</p>
     </div>
   </div>
