@@ -10,7 +10,6 @@
     body {
       background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070') no-repeat center/cover fixed;
       overflow-x: hidden;
-      scroll-behavior: smooth;
     }
     .navbar {
       display: flex;
@@ -29,22 +28,27 @@
       padding: 10px 25px;
       border-radius: 25px;
       font-weight: 500;
+      cursor: pointer;
     }
+    .navbar a.active {background: white; color: black;}
     
-    /* Hero text - default me hide rahega */
+    /* HOME */
+    #homePage {
+      display: block;
+      height: 100vh;
+      padding-top: 120px;
+    }
     .hero-text {
       position: absolute;
       top: 30%;
       left: 8%;
       color: white;
-      z-index: 1;
-      display: none; /* Shuru me band */
     }
-    .hero-text.show {display: block !important;} /* About pe on */
     .hero-text h1 {font-size: 70px; line-height: 1.1; font-weight: 700;}
     .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px;}
 
-    .popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    .popup { 
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
       width: 380px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
       border-radius: 20px; padding: 30px 25px; color: white; z-index: 999;
     }
@@ -57,89 +61,113 @@
     .input-box input {width: 100%; padding: 14px 14px 14px 45px; border: none; border-radius: 12px; background: rgba(255,255,255,0.2); color: white;}
     .login-btn {width: 100%; padding: 14px; border: none; border-radius: 25px; background: linear-gradient(90deg, #00ff88, #00cc66); color: black; font-weight: bold;}
 
-    .section {
+    /* ABOUT / CONTACT */
+    .page {
+      display: none; /* default band */
       min-height: 100vh;
       padding: 120px 8%;
       color: white;
-      background: rgba(0,0,0,0.8);
-      position: relative;
-      z-index: 10;
+      background: rgba(0,0,0,0.85);
     }
-    .section h2 {font-size: 45px; margin-bottom: 20px;}
-    .contact-info {margin-top: 30px; font-size: 18px;}
-    .contact-info i {margin-right: 10px; color: #00ff88;}
+    .page h2 {font-size: 45px; margin-bottom: 20px;}
+    .page p {font-size: 18px; line-height: 1.8;}
   </style>
 </head>
 <body>
 
   <div class="navbar">
-    <a href="#" id="homeBtn">Home</a>
-    <a href="#about" id="aboutBtn">About</a>
-    <a href="#contact" id="contactBtn">Contact</a>
+    <a id="navHome" class="active" onclick="showPage('home')">Home</a>
+    <a id="navAbout" onclick="showPage('about')">About</a>
+    <a id="navContact" onclick="showPage('contact')">Contact</a>
   </div>
 
-  <!-- Ye text ab About pe hi dikhega -->
-  <div class="hero-text" id="heroText">
-    <h1>Dream<br>Destination</h1>
-    <p>Travel with the best</p>
-  </div>
-
-  <div class="popup" id="loginPopup">
-    <button class="close-btn" onclick="document.getElementById('loginPopup').style.display='none'">×</button>
-    <div class="tabs">
-      <span class="active" id="loginTab">Log in</span>
-      <span id="signupTab">Sign up</span>
+  <!-- PAGE 1: HOME -->
+  <div id="homePage">
+    <div class="hero-text">
+      <h1>Dream<br>Destination</h1>
+      <p>Travel with the best</p>
     </div>
-    <h3 style="text-align:center; margin-bottom:20px;">Dream Destination</h3>
-    <form action="/login" method="POST" id="loginForm">
-      <div class="input-box"><i class="fa fa-user"></i><input type="email" name="email" placeholder="Enter Email" required></div>
-      <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Enter password" required></div>
-      <button type="submit" class="login-btn">Log in</button>
-    </form>
-    <form action="/signup" method="POST" id="signupForm" style="display:none;">
-      <div class="input-box"><i class="fa fa-user"></i><input type="text" name="name" placeholder="Enter Name" required></div>
-      <div class="input-box"><i class="fa fa-envelope"></i><input type="email" name="email" placeholder="Enter Email" required></div>
-      <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Create password" required></div>
-      <button type="submit" class="login-btn">Sign up</button>
-    </form>
+
+    <div class="popup" id="loginPopup">
+      <button class="close-btn" onclick="document.getElementById('loginPopup').style.display='none'">×</button>
+      <div class="tabs">
+        <span class="active" id="loginTab">Log in</span>
+        <span id="signupTab">Sign up</span>
+      </div>
+      <h3 style="text-align:center; margin-bottom:20px;">Dream Destination</h3>
+      <form action="/login" method="POST" id="loginForm">
+        <div class="input-box"><i class="fa fa-user"></i><input type="email" name="email" placeholder="Enter Email" required></div>
+        <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Enter password" required></div>
+        <button type="submit" class="login-btn">Log in</button>
+      </form>
+      <form action="/signup" method="POST" id="signupForm" style="display:none;">
+        <div class="input-box"><i class="fa fa-user"></i><input type="text" name="name" placeholder="Enter Name" required></div>
+        <div class="input-box"><i class="fa fa-envelope"></i><input type="email" name="email" placeholder="Enter Email" required></div>
+        <div class="input-box"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Create password" required></div>
+        <button type="submit" class="login-btn">Sign up</button>
+      </form>
+    </div>
   </div>
 
-  <div class="section" id="about">
+  <!-- PAGE 2: ABOUT -->
+  <div class="page" id="aboutPage">
     <h2>About Us</h2>
     <p>Welcome to <b>Travelista - Dream Destination</b> ✈️<br><br>
     We help people reach their dream destinations. 
-    Here you will get the best tour packages, 24/7 customer support, and affordable flights.</p>
+    Here you will get the best tour packages, 24/7 customer support, and affordable flights.
+    <br><br>
+    <b>Customer Feedback:</b> ⭐⭐⭐ <br>
+    "Best travel experience ever! The service is amazing."
+    </p>
   </div>
 
-  <div class="section" id="contact">
+  <!-- PAGE 3: CONTACT -->
+  <div class="page" id="contactPage">
     <h2>Contact Us</h2>
     <p>For any queries, feel free to contact us. We are available 24/7.</p>
-    <div class="contact-info">
-      <p><i class="fa fa-phone"></i> +91 89841 66820</p>
-      <p><i class="fa fa-envelope"></i> momsprince898@gmail.com</p>
-      <p><i class="fa fa-location-dot"></i> Bhubaneswar, Odisha, India</p>
-    </div>
+    <br>
+    <p><i class="fa fa-phone"></i> +91 89841 66820</p>
+    <p><i class="fa fa-envelope"></i> momsprince898@gmail.com</p>
+    <p><i class="fa fa-location-dot"></i> Bhubaneswar, Odisha, India</p>
   </div>
 
   <script>
-    const hero = document.getElementById('heroText');
-    
-    document.getElementById('aboutBtn').onclick = () => hero.classList.add('show'); // About pe show
-    document.getElementById('homeBtn').onclick = () => hero.classList.remove('show'); // Home pe hide
-    document.getElementById('contactBtn').onclick = () => hero.classList.remove('show'); // Contact pe hide
+    function showPage(page) {
+      // sab band
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('contactPage').style.display = 'none';
+      
+      document.getElementById('navHome').classList.remove('active');
+      document.getElementById('navAbout').classList.remove('active');
+      document.getElementById('navContact').classList.remove('active');
 
-    // Agar direct #about link se aao to
-    window.onload = () => {
-      if(window.location.hash === '#about') hero.classList.add('show');
+      // jo chahiye wo on
+      if(page === 'home') {
+        document.getElementById('homePage').style.display = 'block';
+        document.getElementById('navHome').classList.add('active');
+      }
+      if(page === 'about') {
+        document.getElementById('aboutPage').style.display = 'block';
+        document.getElementById('navAbout').classList.add('active');
+      }
+      if(page === 'contact') {
+        document.getElementById('contactPage').style.display = 'block';
+        document.getElementById('navContact').classList.add('active');
+      }
     }
 
     document.getElementById('signupTab').onclick = () => {
       document.getElementById('loginForm').style.display = 'none'; 
       document.getElementById('signupForm').style.display = 'block';
+      document.getElementById('loginTab').classList.remove('active');
+      document.getElementById('signupTab').classList.add('active');
     }
     document.getElementById('loginTab').onclick = () => {
       document.getElementById('signupForm').style.display = 'none'; 
       document.getElementById('loginForm').style.display = 'block';
+      document.getElementById('signupTab').classList.remove('active');
+      document.getElementById('loginTab').classList.add('active');
     }
   </script>
 </body>
