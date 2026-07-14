@@ -33,15 +33,15 @@
     }
     .navbar a:hover {background: rgba(255,255,255,0.3);}
 
+    /* Hero text - sirf Home pe dikhega */
     .hero-text {
       position: absolute;
       top: 30%;
       left: 8%;
       color: white;
       z-index: 1;
-      transition: opacity 0.3s;
     }
-    .hero-text.hide {opacity: 0; pointer-events: none;} /* JS se hide hoga */
+    .hero-text.hide {display: none !important;} /* Pura gayab */
     .hero-text h1 {font-size: 70px; line-height: 1.1; font-weight: 700;}
     .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px;}
 
@@ -66,7 +66,7 @@
       min-height: 100vh;
       padding: 120px 8%;
       color: white;
-      background: rgba(0,0,0,0.7); /* thoda dark kiya taki text clear dikhe */
+      background: rgba(0,0,0,0.75); /* aur dark kiya */
       position: relative;
       z-index: 10;
     }
@@ -146,14 +146,14 @@
     const signupForm = document.getElementById('signupForm');
 
     function hideHero() {
-      heroText.classList.add('hide'); // About/Contact pe hide
+      heroText.classList.add('hide'); // About/Contact pe pura gayab
     }
     function showHero() {
-      heroText.classList.remove('hide'); // Home pe show
+      heroText.classList.remove('hide'); // Home pe wapas
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
-    // Page load pe check karo agar direct #about pe aaye to
+    // Agar direct #about ya #contact link se aao to
     if(window.location.hash === '#about' || window.location.hash === '#contact') {
       hideHero();
     }
