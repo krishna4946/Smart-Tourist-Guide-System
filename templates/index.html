@@ -12,7 +12,6 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
-    /* Navbar */
     .navbar {
       display: flex;
       gap: 15px;
@@ -34,18 +33,18 @@
     }
     .navbar a:hover {background: rgba(255,255,255,0.3);}
 
-    /* Main Text */
     .hero-text {
       position: absolute;
       top: 30%;
       left: 8%;
       color: white;
-      z-index: 1; /* fix overlap */
+      z-index: 1;
+      transition: opacity 0.3s;
     }
+    .hero-text.hide {opacity: 0; pointer-events: none;} /* JS se hide hoga */
     .hero-text h1 {font-size: 70px; line-height: 1.1; font-weight: 700;}
     .hero-text p {font-size: 22px; font-style: italic; margin-top: 10px;}
 
-    /* Popup */
     .popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
       width: 380px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
@@ -63,36 +62,29 @@
     .login-btn {width: 100%; padding: 14px; border: none; border-radius: 25px; background: linear-gradient(90deg, #00ff88, #00cc66); color: black; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px;}
     .forgot {color: white; font-size: 13px; text-align: center; display: block; margin-top: 15px; text-decoration: none;}
 
-    /* About + Contact Section */
     .section {
       min-height: 100vh;
       padding: 120px 8%;
       color: white;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.7); /* thoda dark kiya taki text clear dikhe */
       position: relative;
-      z-index: 10; /* section upar aaye */
+      z-index: 10;
     }
     .section h2 {font-size: 45px; margin-bottom: 20px;}
     .section p {font-size: 18px; line-height: 1.8; max-width: 700px;}
     .contact-info {margin-top: 30px; font-size: 18px;}
     .contact-info i {margin-right: 10px; color: #00ff88;}
-
-    /* FIX: Hide hero text when on About or Contact */
-    body:has(#about:target) .hero-text,
-    body:has(#contact:target) .hero-text {
-      display: none;
-    }
   </style>
 </head>
 <body>
 
   <div class="navbar">
-    <a href="#">Home</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+    <a href="#" onclick="showHero()">Home</a>
+    <a href="#about" onclick="hideHero()">About</a>
+    <a href="#contact" onclick="hideHero()">Contact</a>
   </div>
 
-  <div class="hero-text">
+  <div class="hero-text" id="heroText">
     <h1>Dream<br>Destination</h1>
     <p>Travel with the best</p>
   </div>
@@ -147,10 +139,25 @@
   </div>
 
   <script>
+    const heroText = document.getElementById('heroText');
     const loginTab = document.getElementById('loginTab');
     const signupTab = document.getElementById('signupTab');
     const loginForm = document.getElementById('loginForm');
     const signupForm = document.getElementById('signupForm');
+
+    function hideHero() {
+      heroText.classList.add('hide'); // About/Contact pe hide
+    }
+    function showHero() {
+      heroText.classList.remove('hide'); // Home pe show
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    // Page load pe check karo agar direct #about pe aaye to
+    if(window.location.hash === '#about' || window.location.hash === '#contact') {
+      hideHero();
+    }
+
     signupTab.onclick = () => {
       loginForm.style.display = 'none'; signupForm.style.display = 'block';
       loginTab.classList.remove('active'); signupTab.classList.add('active');
